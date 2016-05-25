@@ -25,7 +25,7 @@ pub fn plugin_registrar(reg: &mut Registry) {
     reg.register_syntax_extension(intern("pg_export"), MultiModifier(box expand_pg_export));
 }
 
-pub fn expand_pg_export(cx: &mut ExtCtxt, span: Span, _: &MetaItem, item: Annotatable) -> Annotatable {
+pub fn expand_pg_export(_cx: &mut ExtCtxt, _span: Span, _: &MetaItem, item: Annotatable) -> Annotatable {
 
     //TODO: enforce func type check
     // if !func.is_fn_like() {
