@@ -15,7 +15,7 @@
 #[macro_export]
 macro_rules! pg_module {
     (version: $vers:expr) => {
-        static mut Pg_magic_data: postgres_extension::Pg_magic_struct =
+        static mut PG_MAGIC_DATA: postgres_extension::Pg_magic_struct =
             postgres_extension::Pg_magic_struct {
                 len: 0 as c_int,
                 version: $vers,
@@ -34,7 +34,7 @@ macro_rules! pg_module {
             use libc::{c_int};
 
             unsafe {
-                Pg_magic_data = postgres_extension::Pg_magic_struct {
+                PG_MAGIC_DATA = postgres_extension::Pg_magic_struct {
                     len: size_of::<postgres_extension::Pg_magic_struct>() as c_int,
                     version: $vers / 100,
                     funcmaxargs: 100,
@@ -44,7 +44,7 @@ macro_rules! pg_module {
                     float8byval: 1
                 };
 
-                &Pg_magic_data
+                &PG_MAGIC_DATA
             }
         }
     }

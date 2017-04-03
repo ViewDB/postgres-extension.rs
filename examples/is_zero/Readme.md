@@ -15,10 +15,11 @@ Simply build the library with Cargo:
 cargo build
 ```
 
-This will generate a new `libis_zero*.dylib` library ready to use in Postgres.
+This will generate a new `libis_zero.so` library ready to use in Postgres.
 
 Now you can run `psql` to link against the library.
 
 ```sql
-CREATE FUNCTION is_zero(int4) RETURNS Boolean AS '/path/to/target/libis_zero-*.dylib' LANGUAGE c;
+CREATE FUNCTION is_zero(int4) RETURNS Boolean AS '/path/to/target/libis_zero.so' LANGUAGE c;
 ```
+refer 

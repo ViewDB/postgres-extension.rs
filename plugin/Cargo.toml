@@ -7,5 +7,5 @@ authors = ["Daniel Fagnan <dnfagnan@gmail.com>",
 [dependencies]
 
 [lib]
+plugin = true
 crate-type = ["dylib"]
-

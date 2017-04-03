@@ -11,7 +11,6 @@ pub const FUNC_MAX_ARGS: c_int = 100;
 
 type PGFunction = extern fn(FunctionCallInfo) -> Datum;
 type fmNodePtr = *mut c_void;
-type fmAggrefPtr = *mut c_void;
 
 /// A trait that is implemented for all Postgres-compatible data types.
 pub trait PgType {}

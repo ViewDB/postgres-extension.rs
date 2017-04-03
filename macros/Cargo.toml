@@ -7,4 +7,4 @@ authors = ["Daniel Fagnan <dnfagnan@gmail.com>",
 
 [lib]
 name = "postgres_extension_macros"
-crate-type = ["rlib"]
+crate-type = ["dylib"]

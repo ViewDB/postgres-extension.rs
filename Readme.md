@@ -26,6 +26,9 @@ path = "https://github.com/thehydroimpulse/postgres-extension.rs"
 
 [dependencies.postgres_extension_macros]
 path = "https://github.com/thehydroimpulse/postgres-extension.rs"
+
+[dependencies.postgres_extension_plugin]
+path = "https://github.com/thehydroimpulse/postgres-extension.rs"
 ```
 
 ## Hello World!
@@ -36,19 +39,11 @@ The first task is to link in the appropriate crates that we need:
 
 ```rust
 // lib.rs
-#![feature(phase)]
+#![feature(libc, custom_attribute, plugin)]
+#![plugin(postgres_extension_plugin)]
 
-extern crate postgres_extension;
-
-#[phase(plugin)]
-extern crate postgres_extension_macros;
 ```
 
-The `phase` feature allows us to specify when to link the specified crate (compile-time? run-time?).
-
-The reason we need two crates is because syntax extensions need to link against `rustc` and `libsyntax`, the Rust compiler and parser (among other things), respectively. These are both fairly big crates and we only have a *compile-time* requirement on them. Meaning, when we run our program (or whatever final output we have) we never ever need access to those compiler crates.
-
-As a result, we'll use the `phase` feature to selectively choose to only link the macro crate during compilation and *not* during runtime.
 
 **Compatibility Checks:**
 
@@ -60,7 +55,10 @@ So, continuing from the previous code we wrote:
 // lib.rs
 // ...
 
-pg_module!(version: 90500)
+extern crate postgres_extension;
+#[macro_use]
+extern crate postgres_extension_macros;
+pg_module!(version: 90500);
 ```
 
 We're just specifying that this extension is compatible with Postgres 9.5, that's it!
@@ -88,7 +86,7 @@ pub fn is_zero(a: i32) -> i32 {
 Simply run `psql` (with whatever options you need/want).
 
 ```sql
-CREATE FUNCTION is_zero(int4) RETURNS Boolean AS '/path/to/target/libis_zero-*.dylib' LANGUAGE c;
+CREATE FUNCTION is_zero(int4) RETURNS Boolean AS '/path/to/target/libis_zero.so' LANGUAGE c;
 ```
 
 Replacing the path with the real location to the `dylib`, of course.

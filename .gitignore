@@ -1,3 +1,7 @@
-/target
+target
 logfile
-/Cargo.lock
+Cargo.lock
+
+
+*.iml
+.idea
